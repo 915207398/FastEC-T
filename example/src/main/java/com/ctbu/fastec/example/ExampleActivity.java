@@ -8,6 +8,8 @@ import com.ctbu.latte.activities.ProxyActivity;
 import com.ctbu.latte.app.Latte;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.icon.FontEcModule;
+import com.ctbu.latte.ec.launcher.LauncherDelegate;
+import com.ctbu.latte.ec.launcher.LauncherScrollDelegate;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
@@ -16,7 +18,7 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new ExampleDelegate();
+        return new LauncherScrollDelegate();
     }
 
 }

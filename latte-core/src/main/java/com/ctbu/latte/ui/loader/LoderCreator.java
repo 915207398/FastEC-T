@@ -1,4 +1,4 @@
-package com.ctbu.latte.ui;
+package com.ctbu.latte.ui.loader;
 
 import android.content.Context;
 

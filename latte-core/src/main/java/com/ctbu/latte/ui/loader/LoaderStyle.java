@@ -1,4 +1,4 @@
-package com.ctbu.latte.ui;
+package com.ctbu.latte.ui.loader;
 
 /**
  * Created by chenting on 2017/11/9.
