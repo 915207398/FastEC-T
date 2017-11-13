@@ -12,6 +12,7 @@ import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
 import com.ctbu.latte.net.RestClient;
 import com.ctbu.latte.net.callback.ISuccess;
+import com.ctbu.latte.util.log.LatteLogger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,26 +35,31 @@ public class SignUpDelegate extends LatteDelegate {
     TextInputEditText mRePasswrod = null;
 
     @OnClick(R2.id.btn_sign_up)
-    void onClickSignUp(){
-        if (checkForm()){
-//            RestClient.builder()
-//                    .url("sign_up")
-//                    .params("","")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    })
-//                    .build()
-//                    .post();
-            Toast.makeText(getContext(),"验证通过",Toast.LENGTH_SHORT).show();
+    void onClickSignUp() {
+        if (checkForm()) {
+            RestClient.builder()
+                    .url("http://192.168.56.1:8080/RestDataServer/api/user_profile.php")
+                    .params("name", mName.getText().toString())
+                    .params("email", mEmail.getText().toString())
+                    .params("phone", mPhone.getText().toString())
+                    .params("password", mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            LatteLogger.json("USER_PROFILE", response);
+                        }
+                    })
+                    .build()
+                    .post();
+            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
     }
+
     @OnClick(R2.id.tv_link_sign_in)
     void onClickLink() {
         getSupportDelegate().start(new SignInDelegate());
     }
+
     private boolean checkForm() {
         final String name = mName.getText().toString();
         final String email = mEmail.getText().toString();

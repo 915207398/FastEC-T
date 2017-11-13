@@ -35,11 +35,16 @@ public class Configurator {
 
     public final void configure() {
         initIcons();
-        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
 
     public final Configurator withApiHost(String host) {
         LATTE_CONFIGS.put(ConfigKeys.API_HOST, host);
+        return this;
+    }
+
+    public final Configurator withLoaderDelayed(long delayed) {
+        LATTE_CONFIGS.put(ConfigKeys.LOADER_DELAYED, delayed);
         return this;
     }
 
