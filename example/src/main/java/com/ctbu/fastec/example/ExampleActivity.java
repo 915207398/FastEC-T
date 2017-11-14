@@ -12,17 +12,18 @@ import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.icon.FontEcModule;
 import com.ctbu.latte.ec.launcher.LauncherDelegate;
 import com.ctbu.latte.ec.launcher.LauncherScrollDelegate;
+import com.ctbu.latte.ec.sign.ISignListener;
 import com.ctbu.latte.ec.sign.SignUpDelegate;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 
-public class ExampleActivity extends ProxyActivity {
+public class ExampleActivity extends ProxyActivity implements ISignListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActionBar actionBar=getSupportActionBar();
-        if (actionBar!=null){
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
             actionBar.hide();
         }
     }
@@ -32,4 +33,13 @@ public class ExampleActivity extends ProxyActivity {
         return new SignUpDelegate();
     }
 
+    @Override
+    public void onSignInSuccess() {
+
+    }
+
+    @Override
+    public void onSignUpSuccess() {
+        Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
+    }
 }

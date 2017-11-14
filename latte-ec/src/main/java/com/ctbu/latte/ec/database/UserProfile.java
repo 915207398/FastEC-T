@@ -18,7 +18,7 @@ public class UserProfile {
 
     @Generated(hash = 1202698052)
     public UserProfile(long userId, String name, String avatar, String gender,
-                       String address) {
+            String address) {
         this.userId = userId;
         this.name = name;
         this.avatar = avatar;
@@ -68,5 +68,9 @@ public class UserProfile {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
