@@ -40,8 +40,8 @@ public class SignUpDelegate extends LatteDelegate {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof ISignListener){
-            mISignListener= (ISignListener) activity;
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
         }
     }
 
@@ -58,12 +58,11 @@ public class SignUpDelegate extends LatteDelegate {
                         @Override
                         public void onSuccess(String response) {
                             LatteLogger.json("USER_PROFILE", response);
-                            SignHandler.onSignUp(response,mISignListener);
+                            SignHandler.onSignUp(response, mISignListener);
                         }
                     })
                     .build()
                     .post();
-//            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
     }
 

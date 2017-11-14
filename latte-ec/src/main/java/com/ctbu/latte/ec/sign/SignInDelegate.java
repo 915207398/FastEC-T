@@ -1,5 +1,6 @@
 package com.ctbu.latte.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
+import com.ctbu.latte.net.RestClient;
+import com.ctbu.latte.net.callback.ISuccess;
+import com.ctbu.latte.util.log.LatteLogger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,6 +28,16 @@ public class SignInDelegate extends LatteDelegate {
     TextInputEditText mEmail = null;
     @BindView(R2.id.edit_sign_in_password)
     TextInputEditText mPassword = null;
+
+    private ISignListener mISignListener = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener){
+            mISignListener= (ISignListener) activity;
+        }
+    }
 
     @OnClick(R2.id.icon_sign_in_wechat)
     void onClickWeChat() {
@@ -40,7 +54,19 @@ public class SignInDelegate extends LatteDelegate {
     @OnClick(R2.id.btn_sign_in)
     void onClickSignIn(){
         if (checkForm()){
-
+            RestClient.builder()
+                    .url("http://192.168.228.2:8080/RestDataServer/api/user_profile.php")
+                    .params("email", mEmail.getText().toString())
+                    .params("password", mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            LatteLogger.json("USER_PROFILE", response);
+                            SignHandler.onSignIn(response, mISignListener);
+                        }
+                    })
+                    .build()
+                    .post();
         }
     }
     @OnClick(R2.id.tv_link_sign_up)

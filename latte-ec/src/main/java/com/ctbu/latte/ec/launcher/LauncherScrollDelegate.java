@@ -1,5 +1,6 @@
 package com.ctbu.latte.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -7,8 +8,12 @@ import android.widget.AdapterView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.ctbu.latte.app.AccountManager;
+import com.ctbu.latte.app.IUserChecker;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.R;
+import com.ctbu.latte.ui.ILauncherListener;
+import com.ctbu.latte.ui.OnLauncherFinishTag;
 import com.ctbu.latte.ui.launcher.LauncherHolderCreator;
 import com.ctbu.latte.ui.launcher.ScrollLauncherTag;
 import com.ctbu.latte.util.storage.LattePreference;
@@ -23,7 +28,7 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
 
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
-
+    private ILauncherListener mILauncherListener = null;
     private void initBanner() {
         INTEGERS.add(R.mipmap.girl_00);
         INTEGERS.add(R.mipmap.girl_01);
@@ -38,6 +43,13 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
                 .setCanLoop(false);
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
+    }
     @Override
     public Object setLayout() {
         mConvenientBanner = new ConvenientBanner<Integer>(getContext());
@@ -56,7 +68,22 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
         if (position == INTEGERS.size() - 1) {
             LattePreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(),true);
         //检查用户是否已经登录
+//检查用户是否登陆了app
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
 
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNDE);
+                    }
+                }
+            });
         }
     }
 }
