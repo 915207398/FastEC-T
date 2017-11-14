@@ -12,16 +12,15 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.SimpleAnnotationValueVisitor7;
 
 /**
- * Created by CaiPengFei on 2017/11/15.
+ * Created by 傅令杰 on 2017/4/22
  */
+final class PayEntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void> {
 
- final class PayEntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void> {
-    private Filer mFiler = null;
-    private TypeMirror mTypeMirror = null;
+    private final Filer FILER;
     private String mPackageName = null;
 
-    public void setFiler(Filer filer) {
-        this.mFiler = filer;
+    PayEntryVisitor(Filer FILER) {
+        this.FILER = FILER;
     }
 
     @Override
@@ -32,23 +31,23 @@ import javax.lang.model.util.SimpleAnnotationValueVisitor7;
 
     @Override
     public Void visitType(TypeMirror t, Void p) {
-        mTypeMirror = t;
+        generateJavaCode(t);
         return p;
     }
 
-    private void generateJavaCode() {
+    private void generateJavaCode(TypeMirror typeMirror) {
         final TypeSpec targetActivity =
                 TypeSpec.classBuilder("WXPayEntryActivity")
                         .addModifiers(Modifier.PUBLIC)
                         .addModifiers(Modifier.FINAL)
-                        .superclass(TypeName.get(mTypeMirror))
+                        .superclass(TypeName.get(typeMirror))
                         .build();
-        final JavaFile javaFile = JavaFile.builder(mPackageName + ".wxapi",
-                targetActivity)
-                .addFileComment("寰俊鏀粯鍏ュ彛鏂囦欢")
+
+        final JavaFile javaFile = JavaFile.builder(mPackageName + ".wxapi", targetActivity)
+                .addFileComment("微信支付入口文件")
                 .build();
         try {
-            javaFile.writeTo(mFiler);
+            javaFile.writeTo(FILER);
         } catch (IOException e) {
             e.printStackTrace();
         }
