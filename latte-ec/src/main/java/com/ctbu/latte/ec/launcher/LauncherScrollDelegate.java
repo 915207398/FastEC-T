@@ -36,7 +36,7 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
         INTEGERS.add(R.mipmap.girl_04);
         mConvenientBanner
                 .setPages(new LauncherHolderCreator(), INTEGERS)
-                .setPageIndicator(new int[]{R.drawable.dot_narmal, R.drawable.dot_focus})
+                .setPageIndicator(new int[]{R.drawable.dot_normal, R.drawable.dot_focus})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(this)
                 .setCanLoop(false);
