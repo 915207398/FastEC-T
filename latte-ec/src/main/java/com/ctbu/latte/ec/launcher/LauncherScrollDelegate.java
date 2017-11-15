@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
@@ -12,8 +11,8 @@ import com.ctbu.latte.app.AccountManager;
 import com.ctbu.latte.app.IUserChecker;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.R;
-import com.ctbu.latte.ui.ILauncherListener;
-import com.ctbu.latte.ui.OnLauncherFinishTag;
+import com.ctbu.latte.ui.launcher.ILauncherListener;
+import com.ctbu.latte.ui.launcher.OnLauncherFinishTag;
 import com.ctbu.latte.ui.launcher.LauncherHolderCreator;
 import com.ctbu.latte.ui.launcher.ScrollLauncherTag;
 import com.ctbu.latte.util.storage.LattePreference;
