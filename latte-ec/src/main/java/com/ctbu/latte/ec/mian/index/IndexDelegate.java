@@ -49,21 +49,8 @@ public class IndexDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        mRefreshHandler = new RefreshHandler(mRefreshLayout);
-        RestClient.builder()
-                .url("index_data.json")
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(String response) {
-                        final IndexDataConverter converter = new IndexDataConverter();
-                        converter.setJsonData(response);
-                        final ArrayList<MultipleItemEntity> list = converter.convert();
-                        final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
-                        Toast.makeText(getContext(),image,Toast.LENGTH_LONG).show();
-                    }
-                })
-                .build()
-                .get();
+        mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
+
     }
 
     //下拉刷新
@@ -78,8 +65,8 @@ public class IndexDelegate extends BottomItemDelegate {
 
     //上拉加载
     private void initRecyclerView() {
-//        final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
-//        mRecyclerView.setLayoutManager(manager);
+        final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+        mRecyclerView.setLayoutManager(manager);
 //        mRecyclerView.addItemDecoration
 //                (BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background), 5));
 //        final EcBottomDelegate ecBottomDelegate = getParentDelegate();
@@ -90,7 +77,7 @@ public class IndexDelegate extends BottomItemDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
-//        initRecyclerView();
+        initRecyclerView();
         mRefreshHandler.firstPage("index_data.json");
     }
 
