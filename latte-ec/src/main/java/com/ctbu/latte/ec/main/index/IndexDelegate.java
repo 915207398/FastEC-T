@@ -1,4 +1,4 @@
-package com.ctbu.latte.ec.mian.index;
+package com.ctbu.latte.ec.main.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,23 +8,14 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import com.ctbu.latte.app.Latte;
 import com.ctbu.latte.delegates.bottom.BottomItemDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
-import com.ctbu.latte.ec.mian.EcBottomDelegate;
-import com.ctbu.latte.net.RestClient;
-import com.ctbu.latte.net.callback.ISuccess;
-import com.ctbu.latte.ui.recycler.MultipleFields;
-import com.ctbu.latte.ui.recycler.MultipleItemEntity;
+import com.ctbu.latte.ui.recycler.BaseDecoration;
 import com.ctbu.latte.ui.refresh.RefreshHandler;
 import com.joanzapata.iconify.widget.IconTextView;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -67,8 +58,8 @@ public class IndexDelegate extends BottomItemDelegate {
     private void initRecyclerView() {
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         mRecyclerView.setLayoutManager(manager);
-//        mRecyclerView.addItemDecoration
-//                (BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background), 5));
+        mRecyclerView.addItemDecoration
+                (BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background), 5));
 //        final EcBottomDelegate ecBottomDelegate = getParentDelegate();
 //        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));
     }

@@ -1,4 +1,4 @@
-package com.ctbu.latte.ec.mian.index;
+package com.ctbu.latte.ec.main.index;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;

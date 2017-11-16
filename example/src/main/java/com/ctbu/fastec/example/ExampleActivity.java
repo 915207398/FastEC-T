@@ -9,11 +9,13 @@ import com.ctbu.latte.activities.ProxyActivity;
 import com.ctbu.latte.app.Latte;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.launcher.LauncherDelegate;
-import com.ctbu.latte.ec.mian.EcBottomDelegate;
+import com.ctbu.latte.ec.main.EcBottomDelegate;
 import com.ctbu.latte.ec.sign.ISignListener;
 import com.ctbu.latte.ec.sign.SignInDelegate;
 import com.ctbu.latte.ui.launcher.ILauncherListener;
 import com.ctbu.latte.ui.launcher.OnLauncherFinishTag;
+
+import qiu.niorgai.StatusBarCompat;
 
 
 public class ExampleActivity extends ProxyActivity implements
@@ -27,6 +29,7 @@ public class ExampleActivity extends ProxyActivity implements
             actionBar.hide();
         }
         Latte.getConfigurator().withActivity(this);
+        StatusBarCompat.translucentStatusBar(this,true);
     }
 
     @Override

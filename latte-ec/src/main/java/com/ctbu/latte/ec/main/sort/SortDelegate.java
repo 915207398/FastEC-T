@@ -1,4 +1,4 @@
-package com.ctbu.latte.ec.mian.sort;
+package com.ctbu.latte.ec.main.sort;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

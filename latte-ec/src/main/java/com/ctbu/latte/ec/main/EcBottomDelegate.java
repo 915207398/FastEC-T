@@ -1,4 +1,4 @@
-package com.ctbu.latte.ec.mian;
+package com.ctbu.latte.ec.main;
 
 import android.graphics.Color;
 
@@ -6,8 +6,8 @@ import com.ctbu.latte.delegates.bottom.BaseBottomDelegate;
 import com.ctbu.latte.delegates.bottom.BottomItemDelegate;
 import com.ctbu.latte.delegates.bottom.BottomTabBean;
 import com.ctbu.latte.delegates.bottom.ItemBuilder;
-import com.ctbu.latte.ec.mian.index.IndexDelegate;
-import com.ctbu.latte.ec.mian.sort.SortDelegate;
+import com.ctbu.latte.ec.main.index.IndexDelegate;
+import com.ctbu.latte.ec.main.sort.SortDelegate;
 
 import java.util.LinkedHashMap;
 
