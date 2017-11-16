@@ -38,6 +38,7 @@ public class SignHandler {
         final String address = profileJson.getString("address");
 
         final UserProfile profile = new UserProfile(userId, name, avatar, gender, address);
+        //cai修改
 //        DatabaseManager.getInstance().getmDao().insert(profile);
         //主键重复自动替换
           DatabaseManager.getInstance().getmDao().insertOrReplace(profile);

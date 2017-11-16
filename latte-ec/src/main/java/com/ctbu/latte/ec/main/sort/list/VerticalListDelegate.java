@@ -47,21 +47,21 @@ public class VerticalListDelegate extends LatteDelegate {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-//        RestClient.builder()
-//                .url("sort_list.php")
-//                .loader(getContext())
-//                .success(new ISuccess() {
-//                    @Override
-//                    public void onSuccess(String response) {
-//                        final List<MultipleItemEntity> data =
-//                                new VerticalListDataConverter().setJsonData(response).convert();
-//                        final SortDelegate delegate = getParentDelegate();
-//                        final SortRecyclerAdapter adapter = new SortRecyclerAdapter(data, delegate);
-//                        mRecyclerView.setAdapter(adapter);
-//
-//                    }
-//                })
-//                .build()
-//                .get();
+        RestClient.builder()
+                .url("sort_list_data.json")
+                .loader(getContext())
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        final List<MultipleItemEntity> data =
+                                new VerticalListDataConverter().setJsonData(response).convert();
+                        final SortDelegate delegate = getParentDelegate();
+                        final SortRecyclerAdapter adapter = new SortRecyclerAdapter(data, delegate);
+                        mRecyclerView.setAdapter(adapter);
+
+                    }
+                })
+                .build()
+                .get();
     }
 }
