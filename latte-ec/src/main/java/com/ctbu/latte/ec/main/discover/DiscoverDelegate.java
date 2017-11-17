@@ -30,7 +30,7 @@ public class DiscoverDelegate extends BottomItemDelegate {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        final WebDelegateImpl delegate = WebDelegateImpl.create("http://192.168.56.1:8080/RestDataServer/index.jsp");
+        final WebDelegateImpl delegate = WebDelegateImpl.create("second.html");
         delegate.setTopDelegate(this.getParentDelegate());
         getSupportDelegate().loadRootFragment(R.id.web_discovery_container, delegate);
     }

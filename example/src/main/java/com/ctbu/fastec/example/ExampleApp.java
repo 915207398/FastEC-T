@@ -3,9 +3,11 @@ package com.ctbu.fastec.example;
 import android.app.Application;
 
 import com.ctbu.latte.app.Latte;
+import com.ctbu.fastec.example.event.TestEvent;
 import com.ctbu.latte.ec.database.DatabaseManager;
 import com.ctbu.latte.ec.icon.FontEcModule;
 import com.ctbu.latte.net.interceptors.DebugInterceptor;
+import com.ctbu.latte.net.rx.AddCookieInterceptor;
 import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
@@ -26,6 +28,10 @@ public class ExampleApp extends Application {
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
                 .withJavascriptInterface("latte")
+                .withWebEvent("test", new TestEvent())
+                //添加Cookie同步拦截器
+                .withWebHost("https://www.baidu.com/")
+                .withInterceptor(new AddCookieInterceptor())
                 .configure();
         initStetho();
         DatabaseManager.getInstance().init(this);

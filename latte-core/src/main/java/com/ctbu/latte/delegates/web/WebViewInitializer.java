@@ -1,9 +1,12 @@
 package com.ctbu.latte.delegates.web;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
 
 /**
  * Created by chenting on 2017/11/17.
@@ -13,7 +16,16 @@ public class WebViewInitializer {
     @SuppressLint("SetJavaScriptEnabled")
     public WebView createWebView(WebView webView) {
 
+        //Goolge调试允许
         WebView.setWebContentsDebuggingEnabled(true);
+
+        //cookie
+        final CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.setAcceptThirdPartyCookies(webView, true);
+        }
+        CookieManager.setAcceptFileSchemeCookies(true);
         //不能横向滚动
         webView.setHorizontalScrollBarEnabled(false);
         //不能纵向滚动
