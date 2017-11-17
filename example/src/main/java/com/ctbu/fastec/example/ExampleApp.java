@@ -25,6 +25,7 @@ public class ExampleApp extends Application {
                 .withInterceptor(new DebugInterceptor("text", R.raw.text))
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
+                .withJavascriptInterface("latte")
                 .configure();
         initStetho();
         DatabaseManager.getInstance().init(this);

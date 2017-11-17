@@ -1,0 +1,42 @@
+package com.ctbu.latte.ec.main.discover;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
+
+import com.ctbu.latte.delegates.bottom.BottomItemDelegate;
+import com.ctbu.latte.delegates.web.WebDelegateImpl;
+import com.ctbu.latte.ec.R;
+
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
+/**
+ * Created by chenting on 2017/11/17.
+ */
+
+public class DiscoverDelegate extends BottomItemDelegate {
+
+    @Override
+    public Object setLayout() {
+        return R.layout.delegate_discover;
+    }
+
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        final WebDelegateImpl delegate = WebDelegateImpl.create("http://192.168.56.1:8080/RestDataServer/index.jsp");
+        delegate.setTopDelegate(this.getParentDelegate());
+        getSupportDelegate().loadRootFragment(R.id.web_discovery_container, delegate);
+    }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
+    }
+}
