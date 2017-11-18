@@ -3,7 +3,8 @@ package com.ctbu.latte.ui.banner;
 import com.ToxicBakery.viewpager.transforms.DefaultTransformer;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.ctbu.latte.R;
+import com.ctbu.latte.ui.R;
+
 
 import java.util.ArrayList;
 

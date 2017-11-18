@@ -52,11 +52,11 @@ public class ExampleActivity extends ProxyActivity implements
         switch (tag) {
             case SIGNED:
                 Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_LONG).show();
-                startWithPop(new EcBottomDelegate());
+                getSupportDelegate().startWithPop(new EcBottomDelegate());
                 break;
             case NOT_SIGNDE:
                 Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_LONG).show();
-                startWithPop(new SignInDelegate());
+                getSupportDelegate().startWithPop(new SignInDelegate());
                 break;
             default:
                 break;

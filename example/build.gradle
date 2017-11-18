@@ -25,7 +25,9 @@ dependencies {
     })
     testApi 'junit:junit:4.12'
     api project(':latte-ec')
+    provided project(':Latte-annotations')
     annotationProcessor project(':Latte-compiler')
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     api 'com.facebook.stetho:stetho:1.5.0'
     api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }

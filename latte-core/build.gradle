@@ -38,7 +38,6 @@ dependencies {
     api 'com.android.support:cardview-v7:26.1.0'
     api 'com.android.support:multidex:1.0.1'
     api 'com.android.support.constraint:constraint-layout:1.0.2'
-    api project(':Latte-annotations')
     //文字图标
     api 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
@@ -61,9 +60,6 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.1.6'
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    //Banner依赖
-    api 'com.bigkoo:convenientbanner:2.0.5'
-    api 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
     //Json依赖
     api 'com.alibaba:fastjson:1.2.40'
     //Log
@@ -74,14 +70,6 @@ dependencies {
     //微信依赖(包含统计)
     //noinspection GradleDynamicVersion
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-    //RecyclerView依赖
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:+'
-    //RecyclerView 分割线
-    api 'com.choices.divider:RecyclerView_Divider:1.0.0'
-    //图片处理
-    api 'com.github.bumptech.glide:glide:4.0.0-RC0'
-    api 'com.github.bumptech.glide:okhttp3-integration:4.0.0-RC0@aar'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC0'
     //沉浸式状态栏
     api 'com.github.niorgai:StatusBarCompat:2.1.4'
     //Google AutoValue

@@ -11,7 +11,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.ctbu.latte.R;
+
+import com.ctbu.latte.ui.R;
 import com.ctbu.latte.ui.banner.BannerCreator;
 
 import java.util.ArrayList;
