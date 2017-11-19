@@ -60,7 +60,9 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
     public double getTotalPrice() {
         return mTotalPrice;
     }
-
+    public void setTotalPrice(double mTotalPrice) {
+        this.mTotalPrice = mTotalPrice;
+    }
     @Override
     protected void convert(MultipleViewHolder holder, final MultipleItemEntity entity) {
         super.convert(holder, entity);
@@ -137,6 +139,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                                             tvCount.setText(String.valueOf(countNum));
                                             if (mCartItemListener != null) {
                                                 mTotalPrice = mTotalPrice - price;
+                                                // FIXME: 2017/11/20 思考这个参数到底有没用
                                                 final double itemTotal = countNum * price;
                                                 mCartItemListener.onItemClick(itemTotal);
                                             }
@@ -164,6 +167,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                                         tvCount.setText(String.valueOf(countNum));
                                         if (mCartItemListener != null) {
                                             mTotalPrice = mTotalPrice + price;
+                                            // FIXME: 2017/11/20 思考这个参数到底有没用
                                             final double itemTotal = countNum * price;
                                             mCartItemListener.onItemClick(itemTotal);
                                         }

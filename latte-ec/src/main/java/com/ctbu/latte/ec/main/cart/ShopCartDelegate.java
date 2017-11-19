@@ -15,6 +15,8 @@ import com.alibaba.fastjson.JSON;
 import com.ctbu.latte.delegates.bottom.BottomItemDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
+import com.ctbu.latte.ec.pay.FastPay;
+import com.ctbu.latte.ec.pay.IAlPayResultListener;
 import com.ctbu.latte.net.RestClient;
 import com.ctbu.latte.net.callback.ISuccess;
 import com.ctbu.latte.ui.recycler.MultipleItemEntity;
@@ -24,6 +26,7 @@ import com.joanzapata.iconify.widget.IconTextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
+import java.util.function.ToDoubleBiFunction;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
  * Created by chenting on 2017/11/18.
  */
 
-public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, ICartItemListener {
+public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, ICartItemListener, IAlPayResultListener {
 
     private ShopCartAdapter mAdapter = null;
     //购物车数量标记
@@ -67,6 +70,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
         }
     }
 
+    //TODO 删除存在多选删除只能删除一个，且价格没有改变bug
     @OnClick(R2.id.tv_top_shop_cart_remove_selected)
     void onClickRemoveSelectedItem() {
         final List<MultipleItemEntity> data = mAdapter.getData();
@@ -89,6 +93,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
             if (removePosition <= mAdapter.getItemCount()) {
                 mAdapter.remove(removePosition);
                 mCurrentCount = mAdapter.getItemCount();
+
                 //更新数据
                 mAdapter.notifyItemRangeChanged(removePosition, mAdapter.getItemCount());
             }
@@ -98,9 +103,13 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
 
     @OnClick(R2.id.tv_top_shop_cart_clear)
     void onClickClear() {
-        mAdapter.getData().clear();
-        mAdapter.notifyDataSetChanged();
-        checkItemCount();
+        if (mAdapter.getItemCount() > 0) {
+            mAdapter.getData().clear();
+            mAdapter.setTotalPrice(0.00);
+            onItemClick(0.00);
+            mAdapter.notifyDataSetChanged();
+            checkItemCount();
+        }
     }
 
     @OnClick(R2.id.tv_shop_cart_pay)
@@ -110,6 +119,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
 
     //创建订单，注意，和支付是没有关系的
     private void createOrder() {
+        // FIXME: 2017/11/20 没填订单PAI
         final String orderUrl = "你的生成订单的API";
         final WeakHashMap<String, Object> orderParams = new WeakHashMap<>();
         //加入你的参数
@@ -123,10 +133,10 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
                         //进行具体的支付
                         LatteLogger.d("ORDER", response);
                         final int orderId = JSON.parseObject(response).getInteger("result");
-//                        FastPay.create(ShopCartDelegate.this)
-//                                .setPayResultListener(ShopCartDelegate.this)
-//                                .setOrderId(orderId)
-//                                .beginPayDialog();
+                        FastPay.create(ShopCartDelegate.this)
+                                .setPayResultListener(ShopCartDelegate.this)
+                                .setOrderId(orderId)
+                                .beginPayDialog();
                     }
                 })
                 .build()
@@ -196,5 +206,30 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
     public void onItemClick(double itemTotalPrice) {
         final double price = mAdapter.getTotalPrice();
         mTvTotalPrice.setText(String.valueOf(price));
+    }
+
+    @Override
+    public void onPaySuccess() {
+
+    }
+
+    @Override
+    public void onPaying() {
+
+    }
+
+    @Override
+    public void onPayFail() {
+
+    }
+
+    @Override
+    public void onPayCancel() {
+
+    }
+
+    @Override
+    public void onPayConnectError() {
+
     }
 }
