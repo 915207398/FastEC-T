@@ -4,6 +4,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ctbu.latte.R;
+import com.ctbu.latte.app.Latte;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.net.callback.IFailure;
 
@@ -11,36 +13,20 @@ import com.ctbu.latte.net.callback.IFailure;
  * Created by chenting on 2017/11/15.
  */
 
-public abstract class BottomItemDelegate extends LatteDelegate implements View.OnKeyListener {
+public abstract class BottomItemDelegate extends LatteDelegate {
 
-    private long mExitTime = 0;
-    private static final int Exit_TIME = 2000;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        final View rootView = getView();
-        if (rootView != null) {
-            rootView.setFocusableInTouchMode(true);
-            rootView.requestFocus();
-            rootView.setOnKeyListener(this);
-        }
-    }
+    // 再点一次退出程序时间设置
+    private static final long WAIT_TIME = 2000L;
+    private long TOUCH_TIME = 0;
 
     @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - mExitTime) > mExitTime) {
-                Toast.makeText(getContext(), "双击退出" + getString(com.wang.avi.R.string.app_name), Toast.LENGTH_LONG);
-                mExitTime = System.currentTimeMillis();
-            } else {
-                _mActivity.finish();
-                if (mExitTime != 0) {
-                    mExitTime = 0;
-                }
-            }
-            return true;
+    public boolean onBackPressedSupport() {
+        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+            _mActivity.finish();
+        } else {
+            TOUCH_TIME = System.currentTimeMillis();
+            Toast.makeText(_mActivity, "双击退出" + Latte.getApplicationContext().getString(R.string.app_name), Toast.LENGTH_SHORT).show();
         }
-        return false;
+        return true;
     }
 }

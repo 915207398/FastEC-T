@@ -21,7 +21,6 @@ public class SortDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        super.onBindView(savedInstanceState, rootView);
     }
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
