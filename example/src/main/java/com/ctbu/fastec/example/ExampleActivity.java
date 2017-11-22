@@ -15,6 +15,7 @@ import com.ctbu.latte.ec.sign.SignInDelegate;
 import com.ctbu.latte.ui.launcher.ILauncherListener;
 import com.ctbu.latte.ui.launcher.OnLauncherFinishTag;
 
+import cn.jpush.android.api.JPushInterface;
 import qiu.niorgai.StatusBarCompat;
 
 
@@ -31,7 +32,17 @@ public class ExampleActivity extends ProxyActivity implements
         Latte.getConfigurator().withActivity(this);
         StatusBarCompat.translucentStatusBar(this,true);
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
     @Override
     public LatteDelegate setRootDelegate() {
         return new LauncherDelegate();

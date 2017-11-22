@@ -36,7 +36,7 @@ public class AddressDelegate extends LatteDelegate implements ISuccess {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         RestClient.builder()
-                .url("address.php")
+                .url("address.json")
                 .loader(getContext())
                 .success(this)
                 .build()

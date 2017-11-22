@@ -12,6 +12,9 @@ import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
 import com.ctbu.latte.ui.widget.AutoPhotoLayout;
 import com.ctbu.latte.ui.widget.StarLayout;
+import com.ctbu.latte.util.callback.CallbackManager;
+import com.ctbu.latte.util.callback.CallbackType;
+import com.ctbu.latte.util.callback.IGlobalCallback;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,12 +43,12 @@ public class OrderCommentDelegate extends LatteDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         mAutoPhotoLayout.setDelegate(this);
-//        CallbackManager.getInstance()
-//                .addCallback(CallbackType.ON_CROP, new IGlobalCallback<Uri>() {
-//                    @Override
-//                    public void executeCallback(@Nullable Uri args) {
-//                        mAutoPhotoLayout.onCropTarget(args);
-//                    }
-//                });
+        CallbackManager.getInstance()
+                .addCallback(CallbackType.ON_CROP, new IGlobalCallback<Uri>() {
+                    @Override
+                    public void executeCallback(@Nullable Uri args) {
+                        mAutoPhotoLayout.onCropTarget(args);
+                    }
+                });
     }
 }

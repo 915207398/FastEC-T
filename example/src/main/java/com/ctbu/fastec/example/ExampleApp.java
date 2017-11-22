@@ -1,6 +1,7 @@
 package com.ctbu.fastec.example;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 
 import com.ctbu.latte.app.Latte;
 import com.ctbu.fastec.example.event.TestEvent;
@@ -8,8 +9,13 @@ import com.ctbu.latte.ec.database.DatabaseManager;
 import com.ctbu.latte.ec.icon.FontEcModule;
 import com.ctbu.latte.net.interceptors.DebugInterceptor;
 import com.ctbu.latte.net.rx.AddCookieInterceptor;
+import com.ctbu.latte.util.callback.CallbackManager;
+import com.ctbu.latte.util.callback.CallbackType;
+import com.ctbu.latte.util.callback.IGlobalCallback;
 import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by chenting on 2017/11/7.
@@ -35,6 +41,31 @@ public class ExampleApp extends Application {
                 .configure();
         initStetho();
         DatabaseManager.getInstance().init(this);
+
+
+        //开启极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
+        CallbackManager.getInstance()
+                .addCallback(CallbackType.TAG_OPEN_PUSH, new IGlobalCallback() {
+                    @Override
+                    public void executeCallback(@Nullable Object args) {
+                        if (JPushInterface.isPushStopped(Latte.getApplicationContext())) {
+                            //开启极光推送
+                            JPushInterface.setDebugMode(true);
+                            JPushInterface.init(Latte.getApplicationContext());
+                        }
+                    }
+                })
+                .addCallback(CallbackType.TAG_STOP_PUSH, new IGlobalCallback() {
+                    @Override
+                    public void executeCallback(@Nullable Object args) {
+                        if (!JPushInterface.isPushStopped(Latte.getApplicationContext())) {
+                            JPushInterface.stopPush(Latte.getApplicationContext());
+                        }
+                    }
+                });
     }
     private void initStetho(){
         Stetho.initialize(
