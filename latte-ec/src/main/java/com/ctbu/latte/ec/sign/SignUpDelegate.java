@@ -1,6 +1,7 @@
 package com.ctbu.latte.ec.sign;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -44,6 +45,14 @@ public class SignUpDelegate extends LatteDelegate {
             mISignListener = (ISignListener) activity;
         }
     }
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof ISignListener){
+//            mISignListener=(ISignListener)context;
+//        }
+//    }
 
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {

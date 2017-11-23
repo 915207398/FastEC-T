@@ -29,8 +29,9 @@ public class ExampleApp extends Application {
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
-                .withApiHost("http://192.168.56.1:8080/RestDataServer/data/")
-                .withInterceptor(new DebugInterceptor("text", R.raw.text))
+//                .withApiHost("http://192.168.56.1:8080/RestDataServer/data/")
+                .withApiHost("http://127.0.0.1/")
+                .withInterceptor(new DebugInterceptor("index", R.raw.text))
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
                 .withJavascriptInterface("latte")
@@ -39,7 +40,11 @@ public class ExampleApp extends Application {
                 .withWebHost("https://www.baidu.com/")
                 .withInterceptor(new AddCookieInterceptor())
                 .configure();
-        initStetho();
+
+//        Google查看sqlite数据用
+//        initStetho();
+
+        //登陆成功后初始化数据。
         DatabaseManager.getInstance().init(this);
 
 
@@ -67,12 +72,12 @@ public class ExampleApp extends Application {
                     }
                 });
     }
-    private void initStetho(){
+/*    private void initStetho(){
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                 .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                 .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                 .build()
         );
-    }
+    }*/
 }
