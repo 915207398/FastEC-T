@@ -14,7 +14,7 @@ import okhttp3.ResponseBody;
 /**
  * Created by CaiPengFei on 2017/11/10.
  */
-
+//拦截器，包涵他的都被拦截。
 public class DebugInterceptor extends BaseInterceptor {
     private final String DEBUG_URL;
     private final int DEBUG_RAW_ID;

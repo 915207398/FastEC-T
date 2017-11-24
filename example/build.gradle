@@ -45,4 +45,5 @@ dependencies {
     //激光推送
     api 'cn.jiguang.sdk:jpush:3.0.1'
     api 'cn.jiguang.sdk:jcore:1.1.0'
+    implementation files('libs/MobCommons-2017.1024.1907.jar')
 }

@@ -85,4 +85,6 @@ dependencies {
         exclude module: "support-v13"
     }
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
+    //二维码扫描
+    compile 'me.dm7.barcodescanner:zbar:1.9.8'
 }

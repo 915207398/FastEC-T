@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ctbu.fastec.example">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -156,7 +157,7 @@
             android:value="26a34a494a1d5dc03b133b24" />
         <!--极光推送结束-->
 
-        <!--&lt;!&ndash;分享&ndash;&gt;
+        <!--分享-->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -172,13 +173,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            &lt;!&ndash; 调用新浪原生SDK，需要注册的回调activity &ndash;&gt;
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-        </activity>-->
+        </activity>
 
     </application>
 

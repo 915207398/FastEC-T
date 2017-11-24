@@ -3,6 +3,7 @@ package com.ctbu.fastec.example;
 import android.app.Application;
 import android.support.annotation.Nullable;
 
+import com.ctbu.fastec.example.event.ShareEvent;
 import com.ctbu.latte.app.Latte;
 import com.ctbu.fastec.example.event.TestEvent;
 import com.ctbu.latte.ec.database.DatabaseManager;
@@ -29,13 +30,13 @@ public class ExampleApp extends Application {
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
-//                .withApiHost("http://192.168.56.1:8080/RestDataServer/data/")
-                .withApiHost("http://127.0.0.1/")
-                .withInterceptor(new DebugInterceptor("index", R.raw.text))
+                .withApiHost("http://192.168.56.1:8080/RestDataServer/data/")
+                .withInterceptor(new DebugInterceptor("text", R.raw.text))
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
                 .withJavascriptInterface("latte")
                 .withWebEvent("test", new TestEvent())
+                .withWebEvent("share", new ShareEvent())
                 //添加Cookie同步拦截器
                 .withWebHost("https://www.baidu.com/")
                 .withInterceptor(new AddCookieInterceptor())
