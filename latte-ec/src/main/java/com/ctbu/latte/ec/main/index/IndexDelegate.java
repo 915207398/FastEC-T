@@ -15,6 +15,7 @@ import com.ctbu.latte.delegates.bottom.BottomItemDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
 import com.ctbu.latte.ec.main.EcBottomDelegate;
+import com.ctbu.latte.ec.main.index.search.SearchDelegate;
 import com.ctbu.latte.ui.recycler.BaseDecoration;
 import com.ctbu.latte.ui.refresh.RefreshHandler;
 import com.ctbu.latte.util.callback.CallbackManager;
@@ -86,7 +87,7 @@ public class IndexDelegate extends BottomItemDelegate implements View.OnFocusCha
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
         initRecyclerView();
-        mRefreshHandler.firstPage("index_data.json");
+        mRefreshHandler.firstPage("data/index_data.json");
     }
 
     @Override
@@ -98,7 +99,7 @@ public class IndexDelegate extends BottomItemDelegate implements View.OnFocusCha
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-//            getParentDelegate().getSupportDelegate().start(new SearchDelegate());
+            getParentDelegate().getSupportDelegate().start(new SearchDelegate());
         }
     }
 }

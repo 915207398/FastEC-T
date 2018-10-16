@@ -47,7 +47,6 @@
 			KakaoStory     https://developers.kakao.com/
 			Plurk          http://www.plurk.com/API
     -->
-	<ShareSDK AppKey="1b471abf2d6e7" /> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false, -->
 
     <SinaWeibo

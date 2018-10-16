@@ -34,12 +34,13 @@ public class DebugInterceptor extends BaseInterceptor {
                 .protocol(Protocol.HTTP_1_1)
                 .build();
     }
-
+    //如果被拦截，就改变返回值
     private Response debugResponse(Chain chain, @RawRes int rawId) {
         final String json = FileUtil.getRawFile(rawId);
         return getResponse(chain, json);
     }
 
+    //判断是否有拦截的关键字
     @Override
     public Response intercept(Chain chain) throws IOException {
         final String url = chain.request().url().toString();

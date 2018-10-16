@@ -1,6 +1,6 @@
 package com.ctbu.latte.ec.launcher;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
@@ -12,6 +12,7 @@ import com.ctbu.latte.app.IUserChecker;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
+import com.ctbu.latte.ec.main.EcBottomDelegate;
 import com.ctbu.latte.ui.launcher.ILauncherListener;
 import com.ctbu.latte.ui.launcher.OnLauncherFinishTag;
 import com.ctbu.latte.ui.launcher.ScrollLauncherTag;
@@ -53,18 +54,20 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof ILauncherListener) {
-            mILauncherListener = (ILauncherListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) context;
         }
     }
 
+    //放布局文件
     @Override
     public Object setLayout() {
         return R.layout.delegate_launcher;
     }
 
+    //继承方法运行结束后调用
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         initTimer();
@@ -72,6 +75,7 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
 
     //判断是否显示滑动启动页
     private void checkIsShowScroll() {
+     //   getSupportDelegate().start(new EcBottomDelegate());
         if (!LattePreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
             getSupportDelegate().start(new LauncherScrollDelegate(), SINGLETASK);
         } else {
@@ -87,7 +91,7 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
                 @Override
                 public void onNotSignIn() {
                     if (mILauncherListener != null) {
-                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNDE);
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
                     }
                 }
             });

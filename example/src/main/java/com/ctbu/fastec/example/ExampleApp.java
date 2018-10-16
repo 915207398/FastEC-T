@@ -1,7 +1,6 @@
 package com.ctbu.fastec.example;
 
 import android.app.Application;
-import android.support.annotation.Nullable;
 
 import com.ctbu.fastec.example.event.ShareEvent;
 import com.ctbu.latte.app.Latte;
@@ -10,13 +9,8 @@ import com.ctbu.latte.ec.database.DatabaseManager;
 import com.ctbu.latte.ec.icon.FontEcModule;
 import com.ctbu.latte.net.interceptors.DebugInterceptor;
 import com.ctbu.latte.net.rx.AddCookieInterceptor;
-import com.ctbu.latte.util.callback.CallbackManager;
-import com.ctbu.latte.util.callback.CallbackType;
-import com.ctbu.latte.util.callback.IGlobalCallback;
 import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
-
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by chenting on 2017/11/7.
@@ -30,8 +24,8 @@ public class ExampleApp extends Application {
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
-                .withApiHost("http://192.168.56.1:8080/RestDataServer/data/")
-                .withInterceptor(new DebugInterceptor("text", R.raw.text))
+                .withApiHost("http://119.29.117.199:8080/")
+                .withInterceptor(new DebugInterceptor("text", R.raw.text))//拦截器，拦截包含这个值得页面或URL
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
                 .withJavascriptInterface("latte")
@@ -42,14 +36,14 @@ public class ExampleApp extends Application {
                 .withInterceptor(new AddCookieInterceptor())
                 .configure();
 
-//        Google查看sqlite数据用
-//        initStetho();
+        //Google查看sqlite数据用
+        initStetho();
 
         //登陆成功后初始化数据。
         DatabaseManager.getInstance().init(this);
 
 
-        //开启极光推送
+   /*     //开启极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
@@ -71,14 +65,15 @@ public class ExampleApp extends Application {
                             JPushInterface.stopPush(Latte.getApplicationContext());
                         }
                     }
-                });
+                });*/
     }
-/*    private void initStetho(){
+
+    private void initStetho() {
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
-                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                .build()
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build()
         );
-    }*/
+    }
 }

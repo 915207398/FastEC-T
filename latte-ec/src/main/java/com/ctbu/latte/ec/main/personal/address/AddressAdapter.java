@@ -43,7 +43,7 @@ public class AddressAdapter extends MultipleRecyclerAdapter {
                     @Override
                     public void onClick(View v) {
                         RestClient.builder()
-                                .url("address.json")
+                                .url("data/address.json")
                                 .params("id", id)
                                 .success(new ISuccess() {
                                     @Override

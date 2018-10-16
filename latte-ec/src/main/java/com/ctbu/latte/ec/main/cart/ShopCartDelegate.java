@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ctbu.latte.delegates.bottom.BottomItemDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
@@ -82,23 +83,19 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
                 deleteEntities.add(entity);
             }
         }
-        for (MultipleItemEntity entity : deleteEntities) {
-            int removePosition;
-            final int entityPosition = entity.getField(ShopCartItemFields.POSITION);
-            if (entityPosition > mCurrentCount - 1) {
-                removePosition = entityPosition - (mTotalCount - mCurrentCount);
-            } else {
-                removePosition = entityPosition;
-            }
-            if (removePosition <= mAdapter.getItemCount()) {
-                mAdapter.remove(removePosition);
-                mCurrentCount = mAdapter.getItemCount();
-
-                //更新数据
-                mAdapter.notifyItemRangeChanged(removePosition, mAdapter.getItemCount());
+        for (int i=0;i<deleteEntities.size();i++){
+            int DataCount =data.size();
+            int currentPosition =deleteEntities.get(i).getField(ShopCartItemFields.POSITION);
+            if(currentPosition<data.size()){
+                mAdapter.remove(currentPosition);
+                for(;currentPosition<DataCount-1;currentPosition++){
+                    int rawItemPos =data.get(currentPosition).getField(ShopCartItemFields.POSITION);
+                    data.get(currentPosition).setField(ShopCartItemFields.POSITION,rawItemPos-1);
+                }
             }
         }
         checkItemCount();
+
     }
 
     @OnClick(R2.id.tv_top_shop_cart_clear)
@@ -120,11 +117,16 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
     //创建订单，注意，和支付是没有关系的
     private void createOrder() {
         // FIXME: 2017/11/20 没填订单PAI
-        final String orderUrl = "你的生成订单的API";
+        final String orderUrl = "http://192.168.0.104:8080/RestDataServer/data/order_list.json";
         final WeakHashMap<String, Object> orderParams = new WeakHashMap<>();
         //加入你的参数
         RestClient.builder()
                 .url(orderUrl)
+
+
+
+
+
                 .loader(getContext())
                 .params(orderParams)
                 .success(new ISuccess() {
@@ -132,7 +134,8 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
                     public void onSuccess(String response) {
                         //进行具体的支付
                         LatteLogger.d("ORDER", response);
-                        final int orderId = JSON.parseObject(response).getInteger("result");
+                        final JSONObject data = JSON.parseObject(response).getJSONObject("data");
+                        int orderId=data.getInteger("id");
                         FastPay.create(ShopCartDelegate.this)
                                 .setPayResultListener(ShopCartDelegate.this)
                                 .setOrderId(orderId)
@@ -178,7 +181,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         RestClient.builder()
-                .url("shop_cart_data.json")
+                .url("data/shop_cart_data.json")
                 .loader(getContext())
                 .success(this)
                 .build()

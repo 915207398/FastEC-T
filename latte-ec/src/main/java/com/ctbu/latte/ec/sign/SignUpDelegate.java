@@ -1,6 +1,5 @@
 package com.ctbu.latte.ec.sign;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +8,15 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
+import com.ctbu.latte.ec.database.User;
 import com.ctbu.latte.net.RestClient;
+import com.ctbu.latte.net.callback.IError;
 import com.ctbu.latte.net.callback.ISuccess;
+import com.ctbu.latte.net.callback.ServerResponse;
 import com.ctbu.latte.util.log.LatteLogger;
 
 import butterknife.BindView;
@@ -34,40 +37,49 @@ public class SignUpDelegate extends LatteDelegate {
     @BindView(R2.id.edit_sign_up_password)
     TextInputEditText mPassword = null;
     @BindView(R2.id.edit_sign_up_re_password)
-    TextInputEditText mRePasswrod = null;
+    TextInputEditText mRePassword = null;
+    @BindView(R2.id.edit_sign_up_question)
+    TextInputEditText mQuestion = null;
+    @BindView(R2.id.edit_sign_up_answer)
+    TextInputEditText mAnswer = null;
 
     private ISignListener mISignListener = null;
+    private User user;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof ISignListener) {
-            mISignListener = (ISignListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ISignListener) {
+            mISignListener = (ISignListener) context;
         }
     }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof ISignListener){
-//            mISignListener=(ISignListener)context;
-//        }
-//    }
 
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
+            LatteLogger.json("PushReceiver", JSON.toJSONString(user));
             RestClient.builder()
-                    .url("http://192.168.56.1:8080/RestDataServer/api/user_profile.php")
-                    .params("name", mName.getText().toString())
-                    .params("email", mEmail.getText().toString())
-                    .params("phone", mPhone.getText().toString())
-                    .params("password", mPassword.getText().toString())
+                    .url("mobile/user/register.do")
+                    .raw(JSON.toJSONString(user))
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
                             LatteLogger.json("USER_PROFILE", response);
-                            SignHandler.onSignUp(response, mISignListener);
+                            ServerResponse serverResponse=SignHandler.responseFlag(response);
+                            if(serverResponse.getStatus()==0){
+                                Toast.makeText(getContext(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                mISignListener.onSignUpSuccess();
+                            }else if(serverResponse.getStatus()==1){
+                                Toast.makeText(getContext(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            }else {
+                                Toast.makeText(getContext(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .error(new IError() {
+                        @Override
+                        public void onError(int code, String msg) {
+                            LatteLogger.i("USER_PROFILE", msg);
                         }
                     })
                     .build()
@@ -85,7 +97,9 @@ public class SignUpDelegate extends LatteDelegate {
         final String email = mEmail.getText().toString();
         final String phone = mPhone.getText().toString();
         final String password = mPassword.getText().toString();
-        final String rePassword = mRePasswrod.getText().toString();
+        final String rePassword = mRePassword.getText().toString();
+        final String question = mQuestion.getText().toString();
+        final String answer = mAnswer.getText().toString();
         boolean isPass = true;
         if (name.isEmpty()) {
             mName.setError("请输入姓名");
@@ -112,11 +126,24 @@ public class SignUpDelegate extends LatteDelegate {
             mPassword.setError(null);
         }
         if (rePassword.isEmpty() || rePassword.length() < 6 || !(rePassword.equals(password))) {
-            mRePasswrod.setError("密码验证错误");
+            mRePassword.setError("密码验证错误");
             isPass = false;
         } else {
-            mRePasswrod.setError(null);
+            mRePassword.setError(null);
         }
+        if (question.isEmpty()) {
+            mQuestion.setError("请输入问题");
+            isPass = false;
+        } else {
+            mQuestion.setError(null);
+        }
+        if (answer.isEmpty()) {
+            mAnswer.setError("请输入答案");
+            isPass = false;
+        } else {
+            mAnswer.setError(null);
+        }
+        user = new User(name, password, email, phone, question, answer);
         return isPass;
     }
 

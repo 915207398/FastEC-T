@@ -51,7 +51,7 @@ public class OrderListDelegate extends LatteDelegate {
         super.onLazyInitView(savedInstanceState);
         RestClient.builder()
                 .loader(getContext())
-                .url("order_list.json")
+                .url("data/order_list.json")
                 .params("type", mType)
                 .success(new ISuccess() {
                     @Override

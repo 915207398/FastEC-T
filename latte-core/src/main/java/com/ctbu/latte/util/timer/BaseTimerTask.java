@@ -14,10 +14,11 @@ public class BaseTimerTask extends TimerTask {
         this.mITimerListener = timerListener;
     }
 
+    //会自动被执行到
     @Override
     public void run() {
-          if (mITimerListener!=null){
-              mITimerListener.onTimer();
-          }
+        if (mITimerListener != null) {
+            mITimerListener.onTimer();
+        }
     }
 }

@@ -23,9 +23,9 @@ public class DownloadHandler {
     private final String URL;
     private static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
     private final IRequest REQUEST;
-    private final String DOWNLOAD_DIR;
-    private final String EXTENSION;
-    private final String NAME;
+    private final String DOWNLOAD_DIR;//文件路径
+    private final String EXTENSION;//后缀名
+    private final String NAME;//完整路径名
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;

@@ -38,8 +38,8 @@ public abstract class BaseInterceptor implements Interceptor {
     protected LinkedHashMap<String, String> getBodyParameters(Chain chain) {
         final FormBody formBody = (FormBody) chain.request().body();
         final LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        int siae = formBody.size();
-        for (int i = 0; i < siae; i++) {
+        int size = formBody.size();
+        for (int i = 0; i < size; i++) {
             params.put(formBody.name(i), formBody.value(i));
         }
         return params;

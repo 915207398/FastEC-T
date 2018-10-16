@@ -60,14 +60,15 @@ public class SaveFileTask extends AsyncTask<Object, Void, File> {
         autoInstallApk(file);
     }
 
+
     //apk默认安装方法
     private void autoInstallApk(File file) {
         if (FileUtil.getExtension(file.getPath()).equals("apk")) {
-            final Intent insatll = new Intent();
-            insatll.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            insatll.setAction(Intent.ACTION_VIEW);
-            insatll.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-            Latte.getApplicationContext().startActivity(insatll);
+            final Intent install = new Intent();
+            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            install.setAction(Intent.ACTION_VIEW);
+            install.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            Latte.getApplicationContext().startActivity(install);
         }
     }
 }

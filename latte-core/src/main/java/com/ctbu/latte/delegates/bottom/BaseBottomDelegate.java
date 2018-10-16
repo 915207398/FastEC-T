@@ -79,8 +79,8 @@ public abstract class BaseBottomDelegate extends LatteDelegate implements View.O
             //设置每个item的点击事件
             item.setTag(i);
             item.setOnClickListener(this);
-            final IconTextView itemIcon = (IconTextView) item.getChildAt(0);
-            final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);
+            final IconTextView itemIcon = (IconTextView) item.getChildAt(0);//得到图标布局
+            final AppCompatTextView itemTitle = (AppCompatTextView) item.getChildAt(1);//得到字体布局
             final BottomTabBean bean = TAB_BEANS.get(i);
             //初始化数据
             itemIcon.setText(bean.getIcon());

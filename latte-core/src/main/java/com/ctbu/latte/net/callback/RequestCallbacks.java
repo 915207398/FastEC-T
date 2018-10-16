@@ -11,6 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * 请求响应返回标识类
  * Created by chenting on 2017/11/9.
  */
 
@@ -40,6 +41,7 @@ public class RequestCallbacks implements Callback<String> {
             }
         } else {
             if (ERROR != null) {
+                // TODO: 2018/1/23 服务器后台用的是status ,不是用的code. ;
                 ERROR.onError(response.code(), response.message());
             }
         }

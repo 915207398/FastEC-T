@@ -80,6 +80,7 @@ public class RestClient {
         if (REQUEST != null) {
             REQUEST.onRequestStart();
         }
+        //显示加载进度条
         if (LOADER_STYLE != null) {
             LatteLoader.showLoading(CONTEXT, LOADER_STYLE);
         }

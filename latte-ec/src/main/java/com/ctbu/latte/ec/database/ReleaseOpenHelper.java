@@ -6,10 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import org.greenrobot.greendao.database.Database;
 
 /**
- * Created by CaiPengFei on 2017/11/14.
+ * Created by CaiPengFei on 2018/1/25.
  */
 
-public class ReleaseOpenHelper extends DaoMaster.OpenHelper {
+public class ReleaseOpenHelper extends DaoMaster.OpenHelper{
+
     public ReleaseOpenHelper(Context context, String name) {
         super(context, name);
     }

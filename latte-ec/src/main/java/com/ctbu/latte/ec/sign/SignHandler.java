@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ctbu.latte.app.AccountManager;
 import com.ctbu.latte.ec.database.DatabaseManager;
-import com.ctbu.latte.ec.database.UserProfile;
+import com.ctbu.latte.ec.database.User;
+import com.ctbu.latte.net.callback.ServerResponse;
+import com.ctbu.latte.util.log.LatteLogger;
+
+import java.util.Date;
 
 
 /**
@@ -15,35 +19,32 @@ public class SignHandler {
 
     public static void onSignIn(String response,ISignListener signListener) {
         final JSONObject profileJson = JSON.parseObject(response).getJSONObject("data");
-        final long userId = profileJson.getLong("userId");
-        final String name = profileJson.getString("name");
-        final String avatar = profileJson.getString("avatar");
-        final String gender = profileJson.getString("gender");
-        final String address = profileJson.getString("address");
+        final Integer id = profileJson.getInteger("id");
+        final String username = profileJson.getString("username");
+        final String password = profileJson.getString("password");
+        final String email = profileJson.getString("email");
+        final String phone = profileJson.getString("phone");
+        final String question = profileJson.getString("question");
+        final String answer = profileJson.getString("answer");
+        final Integer role = profileJson.getInteger("answer");
+        final Date createTime = profileJson.getDate("createTime");
+        final Date updateTime = profileJson.getDate("updateTime");
 
-        final UserProfile profile = new UserProfile(userId, name, avatar, gender, address);
+        final User user = new User(id,username,password,email, phone, question, answer, role, createTime, updateTime);
         //主键重复自动替换
-        DatabaseManager.getInstance().getmDao().insertOrReplace(profile);
+        DatabaseManager.getInstance().getDao().insertOrReplace(user);
         //登录成功
         AccountManager.setSignState(true);
         signListener.onSignInSuccess();
     }
 
-    public static void onSignUp(String response,ISignListener signListener) {
-        final JSONObject profileJson = JSON.parseObject(response).getJSONObject("data");
-        final long userId = profileJson.getLong("userId");
-        final String name = profileJson.getString("name");
-        final String avatar = profileJson.getString("avatar");
-        final String gender = profileJson.getString("gender");
-        final String address = profileJson.getString("address");
+    public static ServerResponse responseFlag(String response) {
+        final JSONObject Json = JSON.parseObject(response);
+        final int status =Json.getInteger("status");
+        final String msg =Json.getString("msg");
+        LatteLogger.d("USER_RESPONSE", status);
+        LatteLogger.d("USER_RESPONSE", msg);
+       return new ServerResponse( status, msg);
 
-        final UserProfile profile = new UserProfile(userId, name, avatar, gender, address);
-        //cai修改
-//        DatabaseManager.getInstance().getmDao().insert(profile);
-        //主键重复自动替换
-          DatabaseManager.getInstance().getmDao().insertOrReplace(profile);
-        //已经注册并登录成功
-        AccountManager.setSignState(true);
-        signListener.onSignUpSuccess();
     }
 }

@@ -14,14 +14,16 @@ public class LauncherHolder implements Holder<Integer> {
 
     private AppCompatTextView mImageView = null;
 
+    //创建容器
     @Override
     public View createView(Context context) {
-       mImageView =new AppCompatTextView(context);
-       return mImageView;
+        mImageView = new AppCompatTextView(context);
+        return mImageView;
     }
 
+    //更新时加载数据
     @Override
     public void UpdateUI(Context context, int position, Integer data) {
-         mImageView.setBackgroundResource(data);
+        mImageView.setBackgroundResource(data);
     }
 }

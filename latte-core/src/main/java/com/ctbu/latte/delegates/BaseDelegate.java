@@ -64,6 +64,7 @@ public abstract class BaseDelegate extends Fragment implements ISupportFragment 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView;
+        //setlayout 返回值类型来判断结果 instanceof 判断返回值类型。
         if (setLayout() instanceof Integer) {
             rootView = inflater.inflate((Integer) setLayout(), container, false);
         } else if (setLayout() instanceof View) {
@@ -71,6 +72,7 @@ public abstract class BaseDelegate extends Fragment implements ISupportFragment 
         } else {
             throw new ClassCastException("type of setLayout() must be int or View!");
         }
+        //绑定视图
         mUnbinder = ButterKnife.bind(this, rootView);
         onBindView(savedInstanceState, rootView);
 

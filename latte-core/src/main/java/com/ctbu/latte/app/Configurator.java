@@ -44,12 +44,14 @@ public class Configurator {
         private static final Configurator INSTANCE = new Configurator();
     }
 
+    //完成初始化，并把初始化完成标志改成true
     public final void configure() {
         initIcons();
         Logger.addLogAdapter(new AndroidLogAdapter());
         LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
 
+    //加载网络URL
     public final Configurator withApiHost(String host) {
         LATTE_CONFIGS.put(ConfigKeys.API_HOST, host);
         return this;
@@ -94,6 +96,7 @@ public class Configurator {
         LATTE_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
         return this;
     }
+
     public Configurator withJavascriptInterface(@NonNull String name) {
         LATTE_CONFIGS.put(ConfigKeys.JAVASCRIPT_INTERFACE, name);
         return this;
@@ -106,10 +109,11 @@ public class Configurator {
     }
 
     //浏览器加载的HOST
-    public Configurator withWebHost(String host){
-        LATTE_CONFIGS.put(ConfigKeys.WEB_HOST,host);
+    public Configurator withWebHost(String host) {
+        LATTE_CONFIGS.put(ConfigKeys.WEB_HOST, host);
         return this;
     }
+
     public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
         INTERCEPTORS.addAll(interceptors);
         LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
@@ -125,6 +129,7 @@ public class Configurator {
 
 
     @SuppressWarnings("unchecked")
+    //调用初始化后键入枚举类里面的值。
     final <T> T getConfiguration(Object key) {
         checkConfiguration();
         final Object value = LATTE_CONFIGS.get(key);

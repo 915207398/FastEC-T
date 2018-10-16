@@ -25,11 +25,14 @@ public class ExampleActivity extends ProxyActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //隐藏actionbar
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+        //键入LATTE_CONFIGS里面Activity值，用于以后上下文调用
         Latte.getConfigurator().withActivity(this);
+        //沉浸式状态栏
         StatusBarCompat.translucentStatusBar(this,true);
     }
     @Override
@@ -51,12 +54,14 @@ public class ExampleActivity extends ProxyActivity implements
     @Override
     public void onSignInSuccess() {
         Toast.makeText(this, "登录成功", Toast.LENGTH_LONG).show();
-        getSupportDelegate().startWithPop(new EcBottomDelegate());
+        getSupportDelegate().start(new EcBottomDelegate());
     }
 
     @Override
     public void onSignUpSuccess() {
         Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
+        getSupportDelegate().start(new SignInDelegate());
+
     }
 
     @Override
@@ -66,7 +71,7 @@ public class ExampleActivity extends ProxyActivity implements
                 Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_LONG).show();
                 getSupportDelegate().startWithPop(new EcBottomDelegate());
                 break;
-            case NOT_SIGNDE:
+            case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_LONG).show();
                 getSupportDelegate().startWithPop(new SignInDelegate());
                 break;

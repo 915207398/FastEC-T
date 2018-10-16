@@ -2,7 +2,6 @@ package com.ctbu.latte.ui.refresh;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -62,8 +61,7 @@ public class RefreshHandler implements
                     @Override
                     public void onSuccess(String response) {
                         //打印网络数据
-//                        Toast.makeText(Latte.getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                        LatteLogger.json("FirstPage", response);
+                       // Toast.makeText(Latte.getApplicationContext(), response, Toast.LENGTH_LONG).show();
                         final JSONObject object = JSON.parseObject(response);
                         BEAN.setTotal(object.getInteger("total"))
                                 .setPageSize(object.getInteger("page_size"));
@@ -118,6 +116,6 @@ public class RefreshHandler implements
 
     @Override
     public void onLoadMoreRequested() {
-        paging("refresh.json?index=");
+        paging("index_2_data?index=");
     }
 }

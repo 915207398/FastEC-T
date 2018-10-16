@@ -36,8 +36,8 @@ public class RestCreator {
     private static final class RetrofitHolder {
         private static final String BASE_URL = Latte.getConfiguration(ConfigKeys.API_HOST);
         private static final Retrofit RETROFIT_ClIENT = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(OKHttpHolder.OK_HTTP_CLIENT)
+                .baseUrl(BASE_URL)//配置全局URL
+                .client(OKHttpHolder.OK_HTTP_CLIENT)//拦截器
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

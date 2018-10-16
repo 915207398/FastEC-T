@@ -1,6 +1,7 @@
 package com.ctbu.latte.ec.sign;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -12,7 +13,9 @@ import com.ctbu.latte.delegates.LatteDelegate;
 import com.ctbu.latte.ec.R;
 import com.ctbu.latte.ec.R2;
 import com.ctbu.latte.net.RestClient;
+import com.ctbu.latte.net.callback.IError;
 import com.ctbu.latte.net.callback.ISuccess;
+import com.ctbu.latte.net.callback.ServerResponse;
 import com.ctbu.latte.util.log.LatteLogger;
 import com.ctbu.latte.wechat.LatteWeChat;
 import com.ctbu.latte.wechat.callbacks.IWeChatSignInCallback;
@@ -34,10 +37,10 @@ public class SignInDelegate extends LatteDelegate {
     private ISignListener mISignListener = null;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof ISignListener){
-            mISignListener= (ISignListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ISignListener){
+            mISignListener= (ISignListener) context;
         }
     }
 
@@ -57,16 +60,25 @@ public class SignInDelegate extends LatteDelegate {
     void onClickSignIn(){
         if (checkForm()){
             RestClient.builder()
-                    .url("http://192.168.56.1:8080/RestDataServer/api/user_profile.php")
+                    .url("mobile/user/login.do")
                     .params("email", mEmail.getText().toString())
                     .params("password", mPassword.getText().toString())
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
                             LatteLogger.json("USER_PROFILE", response);
-                            SignHandler.onSignIn(response, mISignListener);
+                            ServerResponse serverResponse=SignHandler.responseFlag(response);
+                            if(serverResponse.getStatus()==0){
+                                Toast.makeText(getContext(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                SignHandler.onSignIn(response, mISignListener);
+                            }else if(serverResponse.getStatus()==1){
+                                Toast.makeText(getContext(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            }else {
+                                Toast.makeText(getContext(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            }
                         }
                     })
+
                     .build()
                     .post();
         }
